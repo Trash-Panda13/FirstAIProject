@@ -19,11 +19,11 @@ creaturex = 2
 grid [creaturey][creaturex] = "C"
 
 #Food
-food = 20
+berry = 25
 
-foody = 1
-foodx = 4
-grid[foody][foodx] = "F"
+berryy = 1
+berryx = 4
+grid[berryy][berryx] = "F"
 
 #AI
 while health > 0 and hunger > 0 and energy > 0:
@@ -38,46 +38,47 @@ while health > 0 and hunger > 0 and energy > 0:
     oldy = creaturey
 
     #Decision making
-    if hungerScore > energyScore:
+    if hungerScore >= energyScore:
         print("Creature wants to eat")
         
         #Movement
-        if creaturex < foodx:
+        if creaturex < berryx:
             creaturex += 1
-            hunger = max(hunger - 10, 0)
-            energy = max(energy - 5, 0)
-        elif creaturex > foodx:
+            hunger = max(hunger - 5, 0)
+            energy = max(energy - 3, 0)
+        elif creaturex > berryx:
             creaturex -= 1
-            hunger = max(hunger - 10, 0)
-            energy = max(energy - 5, 0)
-        elif creaturey < foody:
+            hunger = max(hunger - 5, 0)
+            energy = max(energy - 3, 0)
+        elif creaturey < berryy:
             creaturey += 1
-            hunger = max(hunger - 10, 0)
-            energy = max(energy - 5, 0)
-        elif creaturey > foody:
+            hunger = max(hunger - 5, 0)
+            energy = max(energy - 3, 0)
+        elif creaturey > berryy:
             creaturey -= 1
-            hunger = max(hunger - 10, 0)
-            energy = max(energy - 5, 0)
+            hunger = max(hunger - 5, 0)
+            energy = max(energy - 3, 0)
             
         #Food consumption
-        if creaturex == foodx and creaturey == foody:
-            hunger = min(hunger + food, 100)
-            print("Creature has eaten the food")
+        if creaturex == berryx and creaturey == berryy:
+            hunger = min(hunger + berry, 100)
+            print("Creature has eaten the berry")
             
-            #Remove old food
-            grid[foody][foodx] = "."
+            #Remove old berry
+            grid[berryy][berryx] = "."
 
-            #New food
-            foody = random.randint(0, 4)
-            foodx = random.randint(0, 4)
+            #New berry
+            berryy = random.randint(0, 4)
+            berryx = random.randint(0, 4)
             
             #Make sure it doesn't spawn on the creature
-            while foody == creaturey and foodx == creaturex:
-                foody = random.randint(0, 4)
-                foodx = random.randint(0, 4)
+            while berryy == creaturey and berryx == creaturex:
+                berryy = random.randint(0, 4)
+                berryx = random.randint(0, 4)
             
     elif energyScore > hungerScore:
         print("Creature wants to sleep")
+        hunger = max(hunger - 5, 0)
         energy = min(energy + 10, 100)
         print("Creature has slept")
         
@@ -90,7 +91,7 @@ while health > 0 and hunger > 0 and energy > 0:
     grid[creaturey][creaturex] = "C"
     
     #Grid Food
-    grid[foody][foodx] = "F"
+    grid[berryy][berryx] = "F"
 
     #The thing idk
     print("Health:", health)

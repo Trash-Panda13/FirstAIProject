@@ -1,3 +1,5 @@
+import random
+
 #The world
 grid = [
     [".", ".", ".", ".", "."],
@@ -57,9 +59,22 @@ while health > 0 and hunger > 0 and energy > 0:
             hunger = max(hunger - 10, 0)
             energy = max(energy - 5, 0)
             
+        #Food consumption
         if creaturex == foodx and creaturey == foody:
             hunger = min(hunger + food, 100)
             print("Creature has eaten the food")
+            
+            #Remove old food
+            grid[foody][foodx] = "."
+
+            #New food
+            foody = random.randint(0, 4)
+            foodx = random.randint(0, 4)
+            
+            #Make sure it doesn't spawn on the creature
+            while foody == creaturey and foodx == creaturex:
+                foody = random.randint(0, 4)
+                foodx = random.randint(0, 4)
             
     elif energyScore > hungerScore:
         print("Creature wants to sleep")
